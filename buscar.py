@@ -40,6 +40,9 @@ def busqueda():
                 lisbo.insert(0, "Ingrese un numero de telefono")
         elif nume == 4:
             lisbo.delete(0, "end")
+            busqueda_g("tipo")
+        elif nume == 5:
+            lisbo.delete(0, "end")
             busqueda_g("marca")
         else:
             lisbo.delete(0, "end")
@@ -60,6 +63,8 @@ def busqueda():
                     verili = BaseDatos.get(BaseDatos.orden == i).apellido
                 elif parametro == "telefono":
                     verili = BaseDatos.get(BaseDatos.orden == i).telefono
+                elif parametro == "tipo":
+                    verili = BaseDatos.get(BaseDatos.orden == i).tipo
                 elif parametro == "marca":
                     verili = BaseDatos.get(BaseDatos.orden == i).marca
                 else:
@@ -79,6 +84,9 @@ def busqueda():
                     )
                     parame.append(
                         "Marca: " + BaseDatos.get(BaseDatos.orden == i).marca,
+                    )
+                    parame.append(
+                        "Tipo: " + BaseDatos.get(BaseDatos.orden == i).tipo,
                     )
                     parame.append(
                         "Direccion: " + BaseDatos.get(BaseDatos.orden == i).direccion
@@ -136,6 +144,9 @@ def busqueda():
             "Marca: " + BaseDatos.get(BaseDatos.orden == cadena).marca,
         )
         parame.append(
+            "Tipo: " + BaseDatos.get(BaseDatos.orden == cadena).tipo,
+        )
+        parame.append(
             "Direccion: " + BaseDatos.get(BaseDatos.orden == cadena).direccion
         )
         parame.append(
@@ -163,9 +174,11 @@ def busqueda():
     busq2 = Radiobutton(toor, text="Apellido", value=2, variable=numoer)
     busq2.place(x=70, y=25)
     busq3 = Radiobutton(toor, text="Telefono", value=3, variable=numoer)
-    busq3.place(x=155, y=25)
-    busq4 = Radiobutton(toor, text="Marca", value=4, variable=numoer)
+    busq3.place(x=160, y=25)
+    busq4 = Radiobutton(toor, text="Tipo", value=4, variable=numoer)
     busq4.place(x=250, y=25)
+    busq5 = Radiobutton(toor, text="Marca", value=5, variable=numoer)
+    busq5.place(x=310, y=25)
     entra = Entry(toor, width=10, bd=3)
     entra.place(x=150, y=50)
     boton = Button(toor, text="Aceptar", command=valor_boton)

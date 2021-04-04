@@ -34,6 +34,7 @@ class BaseDatos(Model):
     apellido = CharField()
     telefono = CharField()
     direccion = CharField()
+    tipo = CharField()
     marca = CharField()
     modelo = CharField()
     falla = CharField()
@@ -42,13 +43,14 @@ class BaseDatos(Model):
     class Meta:
         database = db
 
-    def guardar(self, nomb, apel, tele, dire, marc, mode, fall, otro):
+    def guardar(self, nomb, apel, tele, dire, tipo, marc, mode, fall, otro):
         datos = BaseDatos(
             fecha=datetime.now(),
             nombre=nomb,
             apellido=apel,
             telefono=tele,
             direccion=dire,
+            tipo=tipo,
             marca=marc,
             modelo=mode,
             falla=fall,
