@@ -13,3 +13,5 @@ total, estado de la reparacion, falla, reparacion, notificacion al cliente, etc.
 La orden de reparacion puede ser personalizada con los datos del taller o del reparador al estar echa
 con reportlab. Los datos se guardan en una base de datos SQLite manejada a traves de peewee para
 mayor simplicidad.
+
+Todavia quedan funciones pendientes. ;D
