@@ -47,7 +47,7 @@ def estado():
             print("No encontrado")
 
     def guardar_estado(*args):
-        # Guardo los datos en la base secundaria
+        # Guardo los datos
         orden1 = ordent.get()
         estad1 = numoer.get()
         costo1 = costot.get()

@@ -7,28 +7,44 @@ import sys
 sistema = sys.platform
 ruta1 = os.path.abspath(__file__)
 ruta2 = os.path.split(ruta1)
+archivo = ruta2[0] + "/config"
+
+a = open(archivo, "r")
+dato = a.readlines()
+ruta0 = dato[0].lstrip("ruta_boleta:").rstrip("\n")
+nombre1 = dato[1].lstrip("nombre_1:").rstrip("\n")
+nombre2 = dato[2].lstrip("nombre_2:").rstrip("\n")
+direccion1 = dato[3].lstrip("direccion_1:").rstrip("\n")
+direccion2 = dato[4].lstrip("direccion_2:").rstrip("\n")
+celu = dato[5].lstrip("celular_1:").rstrip("\n")
+a.close()
 
 
 # Determina en que OS estamos trabajando
 if sistema == "linux":
-    if not os.path.isdir(ruta2[0] + "/" + "Boletas"):
-        os.mkdir(ruta2[0] + "/" + "Boletas")
-    ruta3 = ruta2[0] + "/" + "Boletas/"
+    if not ruta0:
+        if not os.path.isdir(ruta2[0] + "/" + "Boletas"):
+            os.mkdir(ruta2[0] + "/" + "Boletas")
+        ruta3 = ruta2[0] + "/" + "Boletas/"
+    elif not os.path.isdir(ruta0):
+        os.mkdir(ruta0)
+        ruta3 = ruta0 + "/"
+    else:
+        ruta3 = ruta0 + "/"
 elif sistema == "win32" or "win64":
-    if not os.path.isdir(ruta2[0] + "\\" + "Boletas"):
-        os.mkdir(ruta2[0] + "\\" + "Boletas")
-    ruta3 = ruta2[0] + "\\" + "Boletas" + "\\"
+    if not ruta0:
+        if not os.path.isdir(ruta2[0] + "\\" + "Boletas"):
+            os.mkdir(ruta2[0] + "\\" + "Boletas")
+        ruta3 = ruta2[0] + "\\" + "Boletas" + "\\"
+    elif not os.path.isdir(ruta0):
+        os.mkdir(ruta0)
+        ruta3 = ruta0 + "\\"
+    else:
+        ruta3 = ruta0 + "\\"
 else:
     print("Sistema no reconocido")
 
 print("Boletas:", ruta3)
-
-
-nombre1 = "Estudio de"
-nombre2 = "Computacion"
-direccion1 = "Calle 845 N° 2590 - Solano"
-direccion2 = "Telefonos: 4271-1279 -- 4212-4585"
-celu = "Guasa 11-4946-4066"
 
 
 def boleta(mi_lista):
@@ -39,7 +55,7 @@ def boleta(mi_lista):
     nom_ape = "Nombre: " + mi_lista[1]
     domici = "Domicilio: " + mi_lista[2]
     telefo = "Telefono: " + mi_lista[3]
-    marca = "Marca: " + mi_lista[4]
+    marca = "Marca: " + mi_lista[4] + " " + "-" + " " + mi_lista[8]
     modelo = "Modelo: " + mi_lista[5]
     falla = "Falla: " + mi_lista[6]
     otros = "Otros: " + mi_lista[7]
@@ -56,11 +72,11 @@ def boleta(mi_lista):
     c.setFont("Helvetica", 7)
     c.drawString(35, 22, "Documento no valido como factura")
     c.setFont("Helvetica", 20)
-    c.drawString(-180, -5, nombre1)
+    c.drawString(-195, -5, nombre1)
     c.setFont("Helvetica", 20)
     c.drawString(-195, -25, nombre2)
     c.setFont("Helvetica", 10)
-    c.drawString(-200, -40, direccion1)
+    c.drawString(-215, -40, direccion1)
     c.setFont("Helvetica", 10)
     c.drawString(-215, -55, direccion2)
     c.setFont("Helvetica", 15)
@@ -150,11 +166,11 @@ def boleta(mi_lista):
     c.setFont("Helvetica", 7)
     c.drawString(-385, 22, "Documento no valido como factura")
     c.setFont("Helvetica", 20)
-    c.drawString(-600, -5, nombre1)
+    c.drawString(-616, -5, nombre1)
     c.setFont("Helvetica", 20)
     c.drawString(-616, -25, nombre2)
     c.setFont("Helvetica", 10)
-    c.drawString(-623, -40, direccion1)
+    c.drawString(-640, -40, direccion1)
     c.setFont("Helvetica", 10)
     c.drawString(-640, -55, direccion2)
     c.setFont("Helvetica", 15)

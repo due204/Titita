@@ -1,18 +1,29 @@
-import tkinter as Tkinter
-import tkinter.ttk as ttk
-from buscar import busqueda
-from tkinter import messagebox
+from tkinter import messagebox, Frame, Label
+from tkinter import Entry, Button, Tk, PhotoImage
 from validar_campos import Validacion
 from base import BaseDatos
+from buscar import busqueda
 from factura import boleta
 from re_factura import re_boleta
 from editar import estado
 from prints import imprimir
+from configurar import configuracion
+import tkinter.ttk as ttk
+import sys
+import os
 
 
-class MiVistas(Tkinter.Frame):
+sistema = sys.platform
+ruta1 = os.path.abspath(__file__)
+ruta2 = os.path.split(ruta1)
+
+print(sistema)
+print(ruta2[0])
+
+
+class MiVistas(Frame):
     def __init__(self, parent):
-        Tkinter.Frame.__init__(self, parent)
+        Frame.__init__(self, parent)
         self.parent = parent
         self.vivista()
         self.valid = Validacion()
@@ -24,119 +35,126 @@ class MiVistas(Tkinter.Frame):
         self.parent.grid_rowconfigure(0, weight=1)
         self.parent.grid_columnconfigure(0, weight=1)
         self.parent.config(background="lavender")
+        if sistema == "linux":
+            logo = PhotoImage(file=ruta2[0] + "/imagenes/titita.gif")
+            self.parent.call("wm", "iconphoto", self.parent._w, logo)
+        else:
+            self.parent.iconbitmap(ruta2[0] + "\\imagenes\\titita.ico")
 
         # Define los distintos widgets
-        self.nombre_label = Tkinter.Label(
+        self.nombre_label = Label(
             self.parent,
             text="Nombre: *",
             bg="lavender",
         )
-        self.nombre_entry = Tkinter.Entry(self.parent, width=100)
+        self.nombre_entry = Entry(self.parent, width=100)
         self.nombre_label.place(x=0, y=0)
         self.nombre_entry.place(x=100, y=0)
 
-        self.apellido_label = Tkinter.Label(
+        self.apellido_label = Label(
             self.parent,
             text="Apellido: *",
             bg="lavender",
         )
-        self.apellido_entry = Tkinter.Entry(self.parent, width=100)
+        self.apellido_entry = Entry(self.parent, width=100)
         self.apellido_label.place(x=0, y=25)
         self.apellido_entry.place(x=100, y=25)
 
-        self.telefono_label = Tkinter.Label(
+        self.telefono_label = Label(
             self.parent,
             text="Telefono: *",
             bg="lavender",
         )
-        self.telefono_entry = Tkinter.Entry(self.parent, width=100)
+        self.telefono_entry = Entry(self.parent, width=100)
         self.telefono_label.place(x=0, y=50)
         self.telefono_entry.place(x=100, y=50)
 
-        self.direccion_label = Tkinter.Label(
+        self.direccion_label = Label(
             self.parent,
             text="Direccion:",
             bg="lavender",
         )
-        self.direccion_entry = Tkinter.Entry(self.parent, width=100)
+        self.direccion_entry = Entry(self.parent, width=100)
         self.direccion_label.place(x=0, y=75)
         self.direccion_entry.place(x=100, y=75)
 
-        self.tipo_label = Tkinter.Label(
+        self.tipo_label = Label(
             self.parent,
             text="Tipo:",
             bg="lavender",
         )
-        self.tipo_entry = Tkinter.Entry(self.parent, width=100)
+        self.tipo_entry = Entry(self.parent, width=100)
         self.tipo_label.place(x=0, y=100)
         self.tipo_entry.place(x=100, y=100)
 
-        self.marca_label = Tkinter.Label(
+        self.marca_label = Label(
             self.parent,
             text="Marca: *",
             bg="lavender",
         )
-        self.marca_entry = Tkinter.Entry(self.parent, width=100)
+        self.marca_entry = Entry(self.parent, width=100)
         self.marca_label.place(x=0, y=125)
         self.marca_entry.place(x=100, y=125)
 
-        self.modelo_label = Tkinter.Label(
+        self.modelo_label = Label(
             self.parent,
             text="Modelo:",
             bg="lavender",
         )
-        self.modelo_entry = Tkinter.Entry(self.parent, width=100)
+        self.modelo_entry = Entry(self.parent, width=100)
         self.modelo_label.place(x=0, y=150)
         self.modelo_entry.place(x=100, y=150)
 
-        self.falla_label = Tkinter.Label(
+        self.falla_label = Label(
             self.parent,
             text="Falla: *",
             bg="lavender",
         )
-        self.falla_entry = Tkinter.Entry(self.parent, width=100)
+        self.falla_entry = Entry(self.parent, width=100)
         self.falla_label.place(x=0, y=175)
         self.falla_entry.place(x=100, y=175)
 
-        self.otros_label = Tkinter.Label(
+        self.otros_label = Label(
             self.parent,
             text="Otros:",
             bg="lavender",
         )
-        self.otros_entry = Tkinter.Entry(self.parent, width=100)
+        self.otros_entry = Entry(self.parent, width=100)
         self.otros_label.place(x=0, y=200)
         self.otros_entry.place(x=100, y=200)
 
         # Boton insertar
-        self.submit_button = Tkinter.Button(
+        self.submit_button = Button(
             self.parent, text="Guardar", command=self.insert_data
         )
         # Esto es para el enter
         self.submit_button.bind("<Return>", self.insert_data)
         self.submit_button.place(x=920, y=0)
         # Boton Buscar en db
-        self.search_button = Tkinter.Button(
+        self.search_button = Button(
             self.parent, text="Buscar", command=self.search_data
         )
         # Esto es para el enter
         self.search_button.bind("<Return>", self.search_data)
         self.search_button.place(x=920, y=40)
         # Boton editar db
-        self.edit_button = Tkinter.Button(
-            self.parent, text="Editar", command=self.edit_data
+        self.edit_button = Button(
+            self.parent,
+            text="Editar",
+            command=self.edit_data,
         )
         # Esto es para el enter
         self.edit_button.bind("<Return>", self.edit_data)
         self.edit_button.place(x=920, y=80)
         # Boton generar boleta
-        self.print_button = Tkinter.Button(
+        self.print_button = Button(
             self.parent, text="Generar", command=self.print_data1
         )
         # Esto es para el enter
         self.print_button.bind("<Return>", self.print_data1)
         self.print_button.place(x=920, y=120)
         # Boton generar boleta
-        self.config_button = Tkinter.Button(
+        self.config_button = Button(
             self.parent, text="Configurar", command=self.config_data
         )
         # Esto es para el enter
@@ -170,17 +188,17 @@ class MiVistas(Tkinter.Frame):
         self.tree.heading("#8", text="Modelo")
         self.tree.heading("#9", text="Falla")
         self.tree.heading("#10", text="Otros")
-        self.tree.column("#0", stretch=Tkinter.YES, width=70)
-        self.tree.column("#1", stretch=Tkinter.YES, width=87)
-        self.tree.column("#2", stretch=Tkinter.YES, width=110)
-        self.tree.column("#3", stretch=Tkinter.YES, width=110)
-        self.tree.column("#4", stretch=Tkinter.YES, width=100)
-        self.tree.column("#5", stretch=Tkinter.YES, width=100)
-        self.tree.column("#6", stretch=Tkinter.YES, width=80)
-        self.tree.column("#7", stretch=Tkinter.YES, width=80)
-        self.tree.column("#8", stretch=Tkinter.YES, width=90)
-        self.tree.column("#9", stretch=Tkinter.YES, width=100)
-        self.tree.column("#10", stretch=Tkinter.YES, width=90)
+        self.tree.column("#0", stretch="YES", width=70)
+        self.tree.column("#1", stretch="YES", width=87)
+        self.tree.column("#2", stretch="YES", width=110)
+        self.tree.column("#3", stretch="YES", width=110)
+        self.tree.column("#4", stretch="YES", width=100)
+        self.tree.column("#5", stretch="YES", width=100)
+        self.tree.column("#6", stretch="YES", width=80)
+        self.tree.column("#7", stretch="YES", width=80)
+        self.tree.column("#8", stretch="YES", width=90)
+        self.tree.column("#9", stretch="YES", width=100)
+        self.tree.column("#10", stretch="YES", width=90)
 
         self.tree.place(x=9, y=240)
         self.treeview = self.tree
@@ -244,15 +262,15 @@ class MiVistas(Tkinter.Frame):
             )
             self.print_data2()
             # Limpia los campos del entry
-            self.nombre_entry.delete(0, Tkinter.END)
-            self.apellido_entry.delete(0, Tkinter.END)
-            self.telefono_entry.delete(0, Tkinter.END)
-            self.direccion_entry.delete(0, Tkinter.END)
-            self.tipo_entry.delete(0, Tkinter.END)
-            self.marca_entry.delete(0, Tkinter.END)
-            self.modelo_entry.delete(0, Tkinter.END)
-            self.falla_entry.delete(0, Tkinter.END)
-            self.otros_entry.delete(0, Tkinter.END)
+            self.nombre_entry.delete(0, "end")
+            self.apellido_entry.delete(0, "end")
+            self.telefono_entry.delete(0, "end")
+            self.direccion_entry.delete(0, "end")
+            self.tipo_entry.delete(0, "end")
+            self.marca_entry.delete(0, "end")
+            self.modelo_entry.delete(0, "end")
+            self.falla_entry.delete(0, "end")
+            self.otros_entry.delete(0, "end")
             # Imprimo los datos
             self.ver_data()
 
@@ -280,6 +298,7 @@ class MiVistas(Tkinter.Frame):
         mi_lisu.append(str(self.modelo_entry.get()))
         mi_lisu.append(str(self.falla_entry.get()))
         mi_lisu.append(str(self.otros_entry.get()))
+        mi_lisu.append(str(self.tipo_entry.get()))
         boleta(mi_lisu)
         bole = messagebox.askyesno(message="¿Imprimir boleta?", title="Boleta")
         if bole:
@@ -287,10 +306,10 @@ class MiVistas(Tkinter.Frame):
             imprimir(str(orde).zfill(5))
 
     def config_data(self, *argus):
-        pass
+        configuracion()
 
 
 if __name__ == "__main__":
-    root = Tkinter.Tk()
+    root = Tk()
     MiVistas(root)
     root.mainloop()
