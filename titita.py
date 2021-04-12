@@ -17,9 +17,6 @@ sistema = sys.platform
 ruta1 = os.path.abspath(__file__)
 ruta2 = os.path.split(ruta1)
 
-print(sistema)
-print(ruta2[0])
-
 
 class MiVistas(Frame):
     def __init__(self, parent):
