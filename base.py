@@ -82,28 +82,5 @@ class BaseSecundaria(Model):
         database = db
 
 
-class Configuraciones(Model):
-    boletas = CharField()
-    nombre1 = CharField()
-    nombre2 = CharField()
-    direccion1 = CharField()
-    direccion2 = CharField()
-    celular = CharField()
-
-    def guardar3(self, bole, nom1, nom2, dir1, dir2, cel):
-        datos3 = Configuraciones(
-            boleta=bole,
-            nombre1=nom1,
-            nombre2=nom2,
-            direccion1=dir1,
-            direccion2=dir2,
-            celular=cel,
-        )
-        datos3.save()
-
-    class Meta:
-        database = db
-
-
 db.connect()
 db.create_tables([BaseDatos, BaseSecundaria])
