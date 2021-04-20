@@ -22,6 +22,7 @@ class MiVistas(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
         self.parent = parent
+        self.parent.protocol("WM_DELETE_WINDOW", self.saliendo)
         self.vivista()
         self.valid = Validacion()
 
@@ -304,6 +305,12 @@ class MiVistas(Frame):
 
     def config_data(self, *argus):
         configuracion()
+
+    #  Esta funcion se ejecuta al cerrar la ventada
+    def saliendo(self):
+        self.parent.quit()
+        self.parent.destroy()
+        print("Saliendo del programa")
 
 
 if __name__ == "__main__":

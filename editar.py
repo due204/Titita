@@ -63,6 +63,8 @@ def estado():
             notificacion=notif1,
         ).where(BaseSecundaria.orden == orden1)
         actualizar.execute()
+        toor.quit()
+        toor.destroy()
 
     texto0 = Label(toor, text="Orden de reparacion N°")
     texto0.place(x=10, y=0)

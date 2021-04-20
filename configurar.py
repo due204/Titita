@@ -8,6 +8,9 @@ ruta1 = os.path.abspath(__file__)
 ruta2 = os.path.split(ruta1)
 archivo = ruta2[0] + "/config"
 
+textedu = """Por correccion de errores, dudas o sugerencias no duden en
+contactarme al mail: due204@gmail.com  PD: Maxi gay"""
+
 
 def configuracion():
     def lectura():
@@ -28,6 +31,8 @@ def configuracion():
         a.write("celular_1:" + telefono.get() + "\n")
         a.write("navegadoor_1:" + navegador.get() + "\n")
         a.close()
+        toor.quit()
+        toor.destroy()
 
     def guradar_ruta():
         # Seleccionamos el directorio
@@ -116,5 +121,8 @@ def configuracion():
     boton1 = Button(toor, text="Guardar", command=guardar_datos)
     boton1.bind("<Return>", guardar_datos)  # Esto es para el enter
     boton1.place(x=330, y=310)
+
+    texto6 = Label(toor, text=textedu)
+    texto6.place(x=10, y=380)
 
     toor.mainloop()
