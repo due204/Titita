@@ -1,13 +1,13 @@
-from tkinter import messagebox, Frame, Label
 from tkinter import Entry, Button, Tk, PhotoImage
+from tkinter import messagebox, Frame, Label
 from validar_campos import Validacion
-from base import BaseDatos
-from buscar import busqueda
-from factura import boleta
-from re_factura import re_boleta
-from editar import estado
-from prints import imprimir
 from configurar import configuracion
+from re_factura import re_boleta
+from buscar import busqueda
+from prints import imprimir
+from base import BaseDatos
+from factura import boleta
+from editar import estado
 import tkinter.ttk as ttk
 import sys
 import os
@@ -30,9 +30,8 @@ class MiVistas(Frame):
         self.parent.title("Titita")
         self.parent.geometry("1050x470")
         self.parent.resizable(False, False)
-        self.parent.grid_rowconfigure(0, weight=1)
-        self.parent.grid_columnconfigure(0, weight=1)
         self.parent.config(background="lavender")
+        #  Elegimos el icono del programa en base al OS
         if sistema == "linux":
             logo = PhotoImage(file=ruta2[0] + "/imagenes/titita.gif")
             self.parent.call("wm", "iconphoto", self.parent._w, logo)
@@ -283,7 +282,7 @@ class MiVistas(Frame):
 
     def print_data2(self, *argus):
         # Creamos una lista, guardamos los datos y se los mandamos
-        # a boleta para generar el pdf
+        # a factura.py para generar el pdf
         mi_lisu = []
         orde = BaseDatos.select().order_by(BaseDatos.orden.desc()).get()
         mi_lisu.append(str(orde).zfill(5))

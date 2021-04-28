@@ -2,7 +2,6 @@ import os
 import sys
 import webbrowser
 
-# https://exdebian.org/wiki/imprimir-archivos-pdf-o-ps-desde-consola-en-gnulinux-utilizando-el-comando-lp
 
 sistema = sys.platform
 ruta1 = os.path.abspath(__file__)
@@ -28,8 +27,14 @@ def imprimir(argu):
         if not naveg:
             webbrowser.open(ruta, new=2, autoraise=True)
     elif sistema == "win32" or "win64":
+        import win32api
+
         if not naveg:
-            ruta = ruta3 + argu + ".pdf"
+            ruta = ruta3 + "\Orden" + argu + ".pdf"
             webbrowser.open(ruta, new=2, autoraise=True)
+            try:
+                win32api.ShellExecute(0, "print", ruta, None, ".", 0)
+            except:
+                print("Impresora no encontrada")
     else:
         print("Sistema no reconocido")

@@ -1,9 +1,9 @@
 from tkinter import Label
 from tkinter import Entry
 from tkinter import Button
+from tkinter import Toplevel
 from base import BaseDatos
 from factura import boleta
-from tkinter import Toplevel
 
 
 contador = True
