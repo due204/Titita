@@ -18,7 +18,11 @@ a.close()
 # Determina en que OS estamos trabajando
 def imprimir(argu):
     if sistema == "linux":
-        ruta = ruta3 + "/Orden" + argu + ".pdf"
+        if not ruta3:
+            # Si no se a especificado la ruta se utiliza la default
+            ruta = ruta2[0] + "/Boletas/Orden" + argu + ".pdf"
+        else:
+            ruta = ruta3 + "/Orden" + argu + ".pdf"
         # Comando GNU/Linux para la impresion
         # Necesita tener cups instalado en su sistema
         # Y configurado su impresora a traves de cups
@@ -30,7 +34,11 @@ def imprimir(argu):
         import win32api
 
         if not naveg:
-            ruta = ruta3 + "\Orden" + argu + ".pdf"
+            # Si no se a especificado la ruta se utiliza la default
+            if not ruta3:
+                ruta = ruta2[0] + "\Boletas\Orden" + argu + ".pdf"
+            else:
+                ruta = ruta3 + "\Orden" + argu + ".pdf"
             webbrowser.open(ruta, new=2, autoraise=True)
             try:
                 win32api.ShellExecute(0, "print", ruta, None, ".", 0)
