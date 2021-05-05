@@ -1,4 +1,4 @@
-ruta_boleta:/home/due204/Titita/Boletas
+ruta_boleta:
 nombre_1:Electronica
 nombre_2:Due204
 direccion_1:Python y mas...

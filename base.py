@@ -39,11 +39,32 @@ class BaseDatos(Model):
     modelo = CharField()
     falla = CharField()
     otros = CharField()
+    estado = IntegerField()  # IntegerField para numeros
+    costo = IntegerField()
+    total = IntegerField()
+    descripcion = CharField()  # CharField para caracteres
+    notificacion = CharField()
 
     class Meta:
         database = db
 
-    def guardar(self, nomb, apel, tele, dire, tipo, marc, mode, fall, otro):
+    def guardar(
+        self,
+        nomb,
+        apel,
+        tele,
+        dire,
+        tipo,
+        marc,
+        mode,
+        fall,
+        otro,
+        esta,
+        cost,
+        tota,
+        decr,
+        noti,
+    ):
         datos = BaseDatos(
             fecha=datetime.now(),
             nombre=nomb,
@@ -55,12 +76,16 @@ class BaseDatos(Model):
             modelo=mode,
             falla=fall,
             otros=otro,
+            estado=esta,
+            costo=cost,
+            total=tota,
+            descripcion=decr,
+            notificacion=noti,
         )
         datos.save()
-        BaseSecundaria.guardar2(0, 1, 0, 0, "Nuevo ingreso", False)
 
 
-class BaseSecundaria(Model):
+"""class BaseSecundaria(Model):
     orden = AutoField()
     estado = IntegerField()  # IntegerField para numeros
     costo = IntegerField()
@@ -79,8 +104,8 @@ class BaseSecundaria(Model):
         datos2.save()
 
     class Meta:
-        database = db
+        database = db"""
 
 
 db.connect()
-db.create_tables([BaseDatos, BaseSecundaria])
+db.create_tables([BaseDatos])

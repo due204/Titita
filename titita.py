@@ -1,13 +1,11 @@
-from tkinter import Entry, Button, Tk, PhotoImage
-from tkinter import messagebox, Frame, Label
+from tkinter import Entry, Button, Tk, PhotoImage, LabelFrame
+from tkinter import messagebox, Frame, Label, Scrollbar, Spinbox
 from validar_campos import Validacion
 from configurar import configuracion
-from re_factura import re_boleta
 from buscar import busqueda
 from prints import imprimir
 from base import BaseDatos
 from factura import boleta
-from editar import estado
 import tkinter.ttk as ttk
 import sys
 import os
@@ -38,129 +36,216 @@ class MiVistas(Frame):
         else:
             self.parent.iconbitmap(ruta2[0] + "\\imagenes\\titita.ico")
 
+        #######################################################################
         # Define los distintos widgets
-        self.nombre_label = Label(
+
+        # Frame de los entry
+        entry_frame = LabelFrame(
             self.parent,
-            text="Nombre: *",
+            text="Datos del cliente y el aparato",
             bg="lavender",
         )
-        self.nombre_entry = Entry(self.parent, width=100)
-        self.nombre_label.place(x=0, y=0)
-        self.nombre_entry.place(x=100, y=0)
+        entry_frame.place(x=10, y=0)
+
+        # Frame de los entry2
+        entry2_frame = LabelFrame(
+            self.parent,
+            text="Datos sobre la reparacion",
+            bg="lavender",
+        )
+        entry2_frame.place(x=550, y=0)
+
+        # Frame de los botones
+        button_frame = LabelFrame(self.parent, text="Comandos", bg="lavender")
+        button_frame.place(x=920, y=0)
+
+        # Frame del treeview
+        tree_frame = Frame(self.parent)
+        tree_frame.place(x=9, y=245)
+
+        #######################################################################
+        # Labels y Entrys
+        self.nombre_label = Label(
+            entry_frame,
+            text="Nombre: ",
+            bg="lavender",
+        )
+        self.nombre_entry = Entry(entry_frame, width=50)
+        self.nombre_label.grid(row=0, column=0)
+        self.nombre_entry.grid(row=0, column=1)
 
         self.apellido_label = Label(
-            self.parent,
-            text="Apellido: *",
+            entry_frame,
+            text="Apellido: ",
             bg="lavender",
         )
-        self.apellido_entry = Entry(self.parent, width=100)
-        self.apellido_label.place(x=0, y=25)
-        self.apellido_entry.place(x=100, y=25)
+        self.apellido_entry = Entry(entry_frame, width=50)
+        self.apellido_label.grid(row=1, column=0)
+        self.apellido_entry.grid(row=1, column=1)
 
         self.telefono_label = Label(
-            self.parent,
-            text="Telefono: *",
+            entry_frame,
+            text="Telefono: ",
             bg="lavender",
         )
-        self.telefono_entry = Entry(self.parent, width=100)
-        self.telefono_label.place(x=0, y=50)
-        self.telefono_entry.place(x=100, y=50)
+        self.telefono_entry = Entry(entry_frame, width=50)
+        self.telefono_label.grid(row=2, column=0)
+        self.telefono_entry.grid(row=2, column=1)
 
         self.direccion_label = Label(
-            self.parent,
+            entry_frame,
             text="Direccion:",
             bg="lavender",
         )
-        self.direccion_entry = Entry(self.parent, width=100)
-        self.direccion_label.place(x=0, y=75)
-        self.direccion_entry.place(x=100, y=75)
+        self.direccion_entry = Entry(entry_frame, width=50)
+        self.direccion_label.grid(row=3, column=0)
+        self.direccion_entry.grid(row=3, column=1)
 
         self.tipo_label = Label(
-            self.parent,
+            entry_frame,
             text="Tipo:",
             bg="lavender",
         )
-        self.tipo_entry = Entry(self.parent, width=100)
-        self.tipo_label.place(x=0, y=100)
-        self.tipo_entry.place(x=100, y=100)
+        self.tipo_entry = Entry(entry_frame, width=50)
+        self.tipo_label.grid(row=4, column=0)
+        self.tipo_entry.grid(row=4, column=1)
 
         self.marca_label = Label(
-            self.parent,
-            text="Marca: *",
+            entry_frame,
+            text="Marca: ",
             bg="lavender",
         )
-        self.marca_entry = Entry(self.parent, width=100)
-        self.marca_label.place(x=0, y=125)
-        self.marca_entry.place(x=100, y=125)
+        self.marca_entry = Entry(entry_frame, width=50)
+        self.marca_label.grid(row=5, column=0)
+        self.marca_entry.grid(row=5, column=1)
 
         self.modelo_label = Label(
-            self.parent,
+            entry_frame,
             text="Modelo:",
             bg="lavender",
         )
-        self.modelo_entry = Entry(self.parent, width=100)
-        self.modelo_label.place(x=0, y=150)
-        self.modelo_entry.place(x=100, y=150)
+        self.modelo_entry = Entry(entry_frame, width=50)
+        self.modelo_label.grid(row=6, column=0)
+        self.modelo_entry.grid(row=6, column=1)
 
         self.falla_label = Label(
-            self.parent,
-            text="Falla: *",
+            entry_frame,
+            text="Falla: ",
             bg="lavender",
         )
-        self.falla_entry = Entry(self.parent, width=100)
-        self.falla_label.place(x=0, y=175)
-        self.falla_entry.place(x=100, y=175)
+        self.falla_entry = Entry(entry_frame, width=50)
+        self.falla_label.grid(row=7, column=0)
+        self.falla_entry.grid(row=7, column=1)
 
         self.otros_label = Label(
-            self.parent,
+            entry_frame,
             text="Otros:",
             bg="lavender",
         )
-        self.otros_entry = Entry(self.parent, width=100)
-        self.otros_label.place(x=0, y=200)
-        self.otros_entry.place(x=100, y=200)
+        self.otros_entry = Entry(entry_frame, width=50)
+        self.otros_label.grid(row=8, column=0, pady=5)
+        self.otros_entry.grid(row=8, column=1, pady=5)
 
+        ##################################################################
+
+        self.estado_spin = Spinbox(
+            entry2_frame,
+            values=("En reparacion", "Presupuestado", "Entrgado"),
+        )
+        self.estado_label = Label(
+            entry2_frame,
+            text="Estado",
+            bg="lavender",
+        )
+        self.estado_spin.grid(row=0, column=1, sticky="w")
+        self.estado_label.grid(row=0, column=0, sticky="w")
+
+        self.costo_label = Label(
+            entry2_frame,
+            text="Costos",
+            bg="lavender",
+        )
+        self.costo_entry = Entry(entry2_frame, width=30)
+        self.costo_label.grid(row=1, column=0, pady=10, sticky="w")
+        self.costo_entry.grid(row=1, column=1, pady=10, sticky="w")
+
+        self.total_label = Label(
+            entry2_frame,
+            text="Total",
+            bg="lavender",
+        )
+        self.total_entry = Entry(entry2_frame, width=30)
+        self.total_label.grid(row=2, column=0, pady=10, sticky="w")
+        self.total_entry.grid(row=2, column=1, pady=10, sticky="w")
+
+        self.descripcion_label = Label(
+            entry2_frame,
+            text="Descripcion",
+            bg="lavender",
+        )
+        self.descripcion_entry = Entry(entry2_frame, width=30)
+        self.descripcion_label.grid(row=3, column=0, pady=10, sticky="w")
+        self.descripcion_entry.grid(row=3, column=1, pady=10, sticky="w")
+
+        self.notificacion_spin = Spinbox(
+            entry2_frame,
+            width=5,
+            values=("No", "Si"),
+        )
+        self.notificacion_label = Label(
+            entry2_frame,
+            text="Se notifico",
+            bg="lavender",
+        )
+        self.notificacion_spin.grid(row=4, column=1, sticky="w")
+        self.notificacion_label.grid(row=4, column=0, sticky="w")
+
+        #######################################################################
+        # Buttons
         # Boton insertar
         self.submit_button = Button(
-            self.parent, text="Guardar", command=self.insert_data
+            button_frame, text="Guardar", command=self.insert_data
         )
         # Esto es para el enter
         self.submit_button.bind("<Return>", self.insert_data)
-        self.submit_button.place(x=920, y=0)
+        self.submit_button.grid(row=0, column=0)
+
         # Boton Buscar en db
         self.search_button = Button(
-            self.parent, text="Buscar", command=self.search_data
+            button_frame, text="Buscar", command=self.search_data
         )
         # Esto es para el enter
         self.search_button.bind("<Return>", self.search_data)
-        self.search_button.place(x=920, y=40)
-        # Boton editar db
-        self.edit_button = Button(
-            self.parent,
-            text="Editar",
-            command=self.edit_data,
+        self.search_button.grid(row=1, column=0, padx=10, pady=10)
+
+        # Boton de borrado de campos
+        self.rm_button = Button(
+            button_frame,
+            text="Borrar",
+            command=self.rm_data,
         )
         # Esto es para el enter
-        self.edit_button.bind("<Return>", self.edit_data)
-        self.edit_button.place(x=920, y=80)
-        # Boton generar boleta
-        self.print_button = Button(
-            self.parent, text="Generar", command=self.print_data1
-        )
-        # Esto es para el enter
-        self.print_button.bind("<Return>", self.print_data1)
-        self.print_button.place(x=920, y=120)
-        # Boton generar boleta
+        self.rm_button.bind("<Return>", self.rm_data)
+        self.rm_button.grid(row=2, column=0, padx=10, pady=10)
+
+        # Boton de configuraciones
         self.config_button = Button(
-            self.parent, text="Configurar", command=self.config_data
+            button_frame, text="Configurar", command=self.config_data
         )
         # Esto es para el enter
         self.config_button.bind("<Return>", self.config_data)
-        self.config_button.place(x=920, y=160)
+        self.config_button.grid(row=3, column=0)
+
+        ##########################
+        tree_scroll = Scrollbar(tree_frame)
+        tree_scroll.pack(side="right", fill="y")
+
+        #######################################################################
 
         # Treeview
         self.tree = ttk.Treeview(
-            self.parent,
+            tree_frame,
+            yscrollcommand=tree_scroll.set,
             columns=(
                 "Fecha",
                 "Nombre",
@@ -174,6 +259,7 @@ class MiVistas(Frame):
                 "Otros",
             ),
         )
+        tree_scroll.config(command=self.tree.yview)
         self.tree.heading("#0", text="Orden")
         self.tree.heading("#1", text="Fecha")
         self.tree.heading("#2", text="Nombre")
@@ -197,9 +283,27 @@ class MiVistas(Frame):
         self.tree.column("#9", stretch="YES", width=100)
         self.tree.column("#10", stretch="YES", width=90)
 
-        self.tree.place(x=9, y=240)
+        self.tree.pack()
+        # Esto es para seleccionar con el click
+        self.tree.bind("<ButtonRelease-1>", self.select_data)
         self.treeview = self.tree
         self.ver_data()
+
+    def rm_data(self):
+        self.nombre_entry.delete(0, "end")
+        self.apellido_entry.delete(0, "end")
+        self.telefono_entry.delete(0, "end")
+        self.direccion_entry.delete(0, "end")
+        self.tipo_entry.delete(0, "end")
+        self.marca_entry.delete(0, "end")
+        self.modelo_entry.delete(0, "end")
+        self.falla_entry.delete(0, "end")
+        self.otros_entry.delete(0, "end")
+        self.estado_spin.delete(0, "end")
+        self.costo_entry.delete(0, "end")
+        self.total_entry.delete(0, "end")
+        self.descripcion_entry.delete(0, "end")
+        self.notificacion_spin.delete(0, "end")
 
     # Insertar los datos de la base en el treeview
     def ver_data(self):
@@ -223,62 +327,77 @@ class MiVistas(Frame):
                     fila.modelo,
                     fila.falla,
                     fila.otros,
+                    fila.estado,
+                    fila.costo,
+                    fila.total,
+                    fila.descripcion,
+                    fila.notificacion,
+                    fila.orden,
                 ),
             )
 
     def insert_data(self, *argus):
         # Verifica que los campos no esten vacios.
-        namae = self.valid.vali(self.nombre_entry.get())
-        myooji = self.valid.vali(self.apellido_entry.get())
-        denwa = self.valid.vali(self.telefono_entry.get())
-        burando = self.valid.vali(self.marca_entry.get())
-        shippai = self.valid.vali(self.falla_entry.get())
-        if not namae or not myooji or not denwa:
-            messagebox.showinfo(
-                title="Campos incompletos",
-                message="Debe completar los campos obligatorios.",
-            )
-        elif not shippai or not burando:
-            messagebox.showinfo(
-                title="Campos incompletos",
-                message="Debe completar los campos obligatorios.",
-            )
-        else:
-            # Guardo los datos
-            guard = BaseDatos()
-            guard.guardar(
-                self.nombre_entry.get(),
-                self.apellido_entry.get(),
-                self.telefono_entry.get(),
-                self.direccion_entry.get(),
-                self.tipo_entry.get(),
-                self.marca_entry.get(),
-                self.modelo_entry.get(),
-                self.falla_entry.get(),
-                self.otros_entry.get(),
-            )
-            self.print_data2()
+        seleccionad = self.tree.focus()
+        # Toma los items del campo seleccionado del treeview
+        valore = self.tree.item(seleccionad, "values")
+        try:
+            print("Orden:", valore[15], "actualizada")
+            actualizar = BaseDatos.update(
+                nombre=self.nombre_entry.get(),
+                apellido=self.apellido_entry.get(),
+                telefono=self.telefono_entry.get(),
+                direccion=self.direccion_entry.get(),
+                tipo=self.tipo_entry.get(),
+                marca=self.marca_entry.get(),
+                modelo=self.modelo_entry.get(),
+                falla=self.falla_entry.get(),
+                otros=self.otros_entry.get(),
+                estado=self.estado_spin.get(),
+                costo=self.costo_entry.get(),
+                total=self.total_entry.get(),
+                descripcion=self.descripcion_entry.get(),
+                notificacion=self.notificacion_spin.get(),
+            ).where(BaseDatos.orden == valore[15])
+            actualizar.execute()
             # Limpia los campos del entry
-            self.nombre_entry.delete(0, "end")
-            self.apellido_entry.delete(0, "end")
-            self.telefono_entry.delete(0, "end")
-            self.direccion_entry.delete(0, "end")
-            self.tipo_entry.delete(0, "end")
-            self.marca_entry.delete(0, "end")
-            self.modelo_entry.delete(0, "end")
-            self.falla_entry.delete(0, "end")
-            self.otros_entry.delete(0, "end")
+            self.rm_data()
             # Imprimo los datos
             self.ver_data()
-
-    def edit_data(self, *argus):
-        estado()
+        except:
+            namae = self.valid.vali(self.nombre_entry.get())
+            if not namae:
+                messagebox.showinfo(
+                    title="Campos incompletos",
+                    message="Debe completar el nombre como minimo.",
+                )
+            else:
+                # Guardo los datos
+                guard = BaseDatos()
+                guard.guardar(
+                    self.nombre_entry.get(),
+                    self.apellido_entry.get(),
+                    self.telefono_entry.get(),
+                    self.direccion_entry.get(),
+                    self.tipo_entry.get(),
+                    self.marca_entry.get(),
+                    self.modelo_entry.get(),
+                    self.falla_entry.get(),
+                    self.otros_entry.get(),
+                    self.estado_spin.get(),
+                    self.costo_entry.get(),
+                    self.total_entry.get(),
+                    self.descripcion_entry.get(),
+                    self.notificacion_spin.get(),
+                )
+                self.print_data2()
+                # Limpia los campos del entry
+                self.rm_data()
+                # Imprimo los datos
+                self.ver_data()
 
     def search_data(self, *argus):
         busqueda()
-
-    def print_data1(self, *argus):
-        re_boleta()
 
     def print_data2(self, *argus):
         # Creamos una lista, guardamos los datos y se los mandamos
@@ -304,6 +423,29 @@ class MiVistas(Frame):
 
     def config_data(self, *argus):
         configuracion()
+
+    def select_data(self, *argus):
+        # Borro todos los campos
+        self.rm_data()
+        # Selecciona la fila del treeview
+        seleccionado = self.tree.focus()
+        # Toma los items del campo seleccionado del treeview
+        valores = self.tree.item(seleccionado, "values")
+        # Inserta los valores en los campos
+        self.nombre_entry.insert(0, valores[1])
+        self.apellido_entry.insert(0, valores[2])
+        self.telefono_entry.insert(0, valores[3])
+        self.direccion_entry.insert(0, valores[4])
+        self.tipo_entry.insert(0, valores[5])
+        self.marca_entry.insert(0, valores[6])
+        self.modelo_entry.insert(0, valores[7])
+        self.falla_entry.insert(0, valores[8])
+        self.otros_entry.insert(0, valores[9])
+        self.estado_spin.insert(0, valores[10])
+        self.costo_entry.insert(0, valores[11])
+        self.total_entry.insert(0, valores[12])
+        self.descripcion_entry.insert(0, valores[13])
+        self.notificacion_spin.insert(0, valores[14])
 
     #  Esta funcion se ejecuta al cerrar la ventada
     def saliendo(self):

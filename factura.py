@@ -72,13 +72,13 @@ def boleta(mi_lista):
     c.setFont("Helvetica", 7)
     c.drawString(35, 22, "Documento no valido como factura")
     c.setFont("Helvetica", 20)
-    c.drawString(-195, -5, nombre1)
+    c.drawString(-220, -5, nombre1)
     c.setFont("Helvetica", 20)
-    c.drawString(-195, -25, nombre2)
+    c.drawString(-220, -25, nombre2)
     c.setFont("Helvetica", 10)
-    c.drawString(-215, -40, direccion1)
+    c.drawString(-220, -40, direccion1)
     c.setFont("Helvetica", 10)
-    c.drawString(-215, -55, direccion2)
+    c.drawString(-220, -55, direccion2)
     c.setFont("Helvetica", 15)
     c.drawString(0, 0, "Orden de reparacion")
     c.setFont("Helvetica", 30)
@@ -121,7 +121,7 @@ def boleta(mi_lista):
     c.drawString(
         -218,
         -448,
-        "se retiraran con el documento del titular. Pasado los 90 dias los equipos SERAN CONSIDERADOS AVANDONADOS",
+        "se retiraran con el documento del titular. Pasado los 90 dias los equipos SERAN CONSIDERADOS ABANDONADOS",
     )
     c.setFont("Helvetica", 7)
     c.drawString(
@@ -166,9 +166,9 @@ def boleta(mi_lista):
     c.setFont("Helvetica", 7)
     c.drawString(-385, 22, "Documento no valido como factura")
     c.setFont("Helvetica", 20)
-    c.drawString(-616, -5, nombre1)
+    c.drawString(-640, -5, nombre1)
     c.setFont("Helvetica", 20)
-    c.drawString(-616, -25, nombre2)
+    c.drawString(-640, -25, nombre2)
     c.setFont("Helvetica", 10)
     c.drawString(-640, -40, direccion1)
     c.setFont("Helvetica", 10)
@@ -215,7 +215,7 @@ def boleta(mi_lista):
     c.drawString(
         -640,
         -448,
-        "se retiraran con el documento del titular. Pasado los 90 dias los equipos SERAN CONSIDERADOS AVANDONADOS",
+        "se retiraran con el documento del titular. Pasado los 90 dias los equipos SERAN CONSIDERADOS ABANDONADOS",
     )
     c.drawString(
         -640,

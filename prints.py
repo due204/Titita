@@ -15,8 +15,10 @@ naveg = dato[6].lstrip("navegador_1:").rstrip("\n")
 a.close()
 
 
-# Determina en que OS estamos trabajando
 def imprimir(argu):
+    # Determina en que OS estamos trabajando
+    # Si estamos en GNU/Linux
+    ####################################################################
     if sistema == "linux":
         if not ruta3:
             # Si no se a especificado la ruta se utiliza la default
@@ -30,6 +32,9 @@ def imprimir(argu):
         os.system(ruta_l)
         if not naveg:
             webbrowser.open(ruta, new=2, autoraise=True)
+
+    # Si estamos en Windows
+    ####################################################################
     elif sistema == "win32" or "win64":
         import win32api
 
@@ -44,5 +49,8 @@ def imprimir(argu):
                 win32api.ShellExecute(0, "print", ruta, None, ".", 0)
             except:
                 print("Impresora no encontrada")
+
+    # Si no reconoce el sistema
+    ####################################################################
     else:
         print("Sistema no reconocido")
