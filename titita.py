@@ -1,5 +1,13 @@
-from tkinter import Entry, Button, Tk, PhotoImage, LabelFrame
-from tkinter import messagebox, Frame, Label, Scrollbar, Spinbox
+from tkinter import Entry
+from tkinter import Button
+from tkinter import Tk
+from tkinter import PhotoImage
+from tkinter import LabelFrame
+from tkinter import messagebox
+from tkinter import Frame
+from tkinter import Label
+from tkinter import Scrollbar
+from tkinter import Spinbox
 from validar_campos import Validacion
 from configurar import configuracion
 from buscar import busqueda
@@ -25,9 +33,13 @@ class MiVistas(Frame):
         self.valid = Validacion()
 
     def vivista(self):
+        # Titulo
         self.parent.title("Titita")
-        self.parent.geometry("1050x470")
+        # Tamaño y pocision de la ventana
+        self.parent.geometry("1050x480+100+100")
+        # Redimensionable
         self.parent.resizable(False, False)
+        # Color de fondo
         self.parent.config(background="lavender")
         #  Elegimos el icono del programa en base al OS
         if sistema == "linux":
@@ -106,9 +118,43 @@ class MiVistas(Frame):
             text="Tipo:",
             bg="lavender",
         )
-        self.tipo_entry = Entry(entry_frame, width=50)
+        self.tipo_spinbox = Spinbox(
+            entry_frame,
+            width=48,
+            values=(
+                "",
+                "Amplificador",
+                "Auricular",
+                "Auto estereo",
+                "Decodificador",
+                "Camara",
+                "Celular",
+                "Centro Musical",
+                "Consola de video juegos",
+                "Consola portatil",
+                "Estabilizador de tension",
+                "Fuente de alimentacion",
+                "Fuente inversora",
+                "Impresora",
+                "Mixer",
+                "Monitor",
+                "Netbook",
+                "Notebook",
+                "Parlante Bluetooth",
+                "PC",
+                "Potencia de audio",
+                "Radio",
+                "Reproductor de DVD",
+                "Tablet",
+                "Teclado",
+                "Teclado musical",
+                "Tv",
+                "UPS",
+                "Otro",
+            ),
+        )
         self.tipo_label.grid(row=4, column=0)
-        self.tipo_entry.grid(row=4, column=1)
+        self.tipo_spinbox.grid(row=4, column=1, sticky="w")
 
         self.marca_label = Label(
             entry_frame,
@@ -289,12 +335,13 @@ class MiVistas(Frame):
         self.treeview = self.tree
         self.ver_data()
 
+    # Esta funcion se encarga de borrar los datos de la pantalla del treeview
     def rm_data(self):
         self.nombre_entry.delete(0, "end")
         self.apellido_entry.delete(0, "end")
         self.telefono_entry.delete(0, "end")
         self.direccion_entry.delete(0, "end")
-        self.tipo_entry.delete(0, "end")
+        self.tipo_spinbox.delete(0, "end")
         self.marca_entry.delete(0, "end")
         self.modelo_entry.delete(0, "end")
         self.falla_entry.delete(0, "end")
@@ -305,7 +352,7 @@ class MiVistas(Frame):
         self.descripcion_entry.delete(0, "end")
         self.notificacion_spin.delete(0, "end")
 
-    # Insertar los datos de la base en el treeview
+    # Esta funcion se encarga de insertar los datos de la base en el treeview
     def ver_data(self):
         resultado = BaseDatos.select()
         records = self.tree.get_children()
@@ -336,35 +383,14 @@ class MiVistas(Frame):
                 ),
             )
 
+    #  Esta funcion se encarga de guardar los datos y de actualizarlos
     def insert_data(self, *argus):
         # Verifica que los campos no esten vacios.
         seleccionad = self.tree.focus()
         # Toma los items del campo seleccionado del treeview
         valore = self.tree.item(seleccionad, "values")
         try:
-            print("Orden:", valore[15], "actualizada")
-            actualizar = BaseDatos.update(
-                nombre=self.nombre_entry.get(),
-                apellido=self.apellido_entry.get(),
-                telefono=self.telefono_entry.get(),
-                direccion=self.direccion_entry.get(),
-                tipo=self.tipo_entry.get(),
-                marca=self.marca_entry.get(),
-                modelo=self.modelo_entry.get(),
-                falla=self.falla_entry.get(),
-                otros=self.otros_entry.get(),
-                estado=self.estado_spin.get(),
-                costo=self.costo_entry.get(),
-                total=self.total_entry.get(),
-                descripcion=self.descripcion_entry.get(),
-                notificacion=self.notificacion_spin.get(),
-            ).where(BaseDatos.orden == valore[15])
-            actualizar.execute()
-            # Limpia los campos del entry
-            self.rm_data()
-            # Imprimo los datos
-            self.ver_data()
-        except:
+            # Controlo que el campo del nombre este completo antes de continuar
             namae = self.valid.vali(self.nombre_entry.get())
             if not namae:
                 messagebox.showinfo(
@@ -372,14 +398,46 @@ class MiVistas(Frame):
                     message="Debe completar el nombre como minimo.",
                 )
             else:
-                # Guardo los datos
+                # Acutualizo la base de datos
+                print("Orden:", valore[15], "actualizada")
+                actualizar = BaseDatos.update(
+                    nombre=self.nombre_entry.get(),
+                    apellido=self.apellido_entry.get(),
+                    telefono=self.telefono_entry.get(),
+                    direccion=self.direccion_entry.get(),
+                    tipo=self.tipo_spinbox.get(),
+                    marca=self.marca_entry.get(),
+                    modelo=self.modelo_entry.get(),
+                    falla=self.falla_entry.get(),
+                    otros=self.otros_entry.get(),
+                    estado=self.estado_spin.get(),
+                    costo=self.costo_entry.get(),
+                    total=self.total_entry.get(),
+                    descripcion=self.descripcion_entry.get(),
+                    notificacion=self.notificacion_spin.get(),
+                ).where(BaseDatos.orden == valore[15])
+                actualizar.execute()
+                # Limpia los campos del entry
+                self.rm_data()
+                # Imprimo por pantalla los datos
+                self.ver_data()
+        except:
+            # Controlo que el campo del nombre este completo antes de continuar
+            namae = self.valid.vali(self.nombre_entry.get())
+            if not namae:
+                messagebox.showinfo(
+                    title="Campos incompletos",
+                    message="Debe completar el nombre como minimo.",
+                )
+            else:
+                # Guardo los datos en la base de datos
                 guard = BaseDatos()
                 guard.guardar(
                     self.nombre_entry.get(),
                     self.apellido_entry.get(),
                     self.telefono_entry.get(),
                     self.direccion_entry.get(),
-                    self.tipo_entry.get(),
+                    self.tipo_spinbox.get(),
                     self.marca_entry.get(),
                     self.modelo_entry.get(),
                     self.falla_entry.get(),
@@ -390,15 +448,18 @@ class MiVistas(Frame):
                     self.descripcion_entry.get(),
                     self.notificacion_spin.get(),
                 )
+                # Mando a imprimir los datos
                 self.print_data2()
                 # Limpia los campos del entry
                 self.rm_data()
-                # Imprimo los datos
+                # Imprimo por pantalla los datos
                 self.ver_data()
 
+    #  Esta funcion se encarga de hacer la busqueda en nuestra base de datos
     def search_data(self, *argus):
         busqueda()
 
+    #  Esta funcion se encarga de mandar los datos a imprimir
     def print_data2(self, *argus):
         # Creamos una lista, guardamos los datos y se los mandamos
         # a factura.py para generar el pdf
@@ -414,16 +475,18 @@ class MiVistas(Frame):
         mi_lisu.append(str(self.modelo_entry.get()))
         mi_lisu.append(str(self.falla_entry.get()))
         mi_lisu.append(str(self.otros_entry.get()))
-        mi_lisu.append(str(self.tipo_entry.get()))
+        mi_lisu.append(str(self.tipo_spinbox.get()))
         boleta(mi_lisu)
         bole = messagebox.askyesno(message="¿Imprimir boleta?", title="Boleta")
         if bole:
             # Mandamos el numero de orden a imprimir
             imprimir(str(orde).zfill(5))
 
+    #  Esta funcion se encarga de la configuracion
     def config_data(self, *argus):
         configuracion()
 
+    #  Esta funcion se encarga de cargar el valor seleccionado en el treeview
     def select_data(self, *argus):
         # Borro todos los campos
         self.rm_data()
@@ -436,7 +499,7 @@ class MiVistas(Frame):
         self.apellido_entry.insert(0, valores[2])
         self.telefono_entry.insert(0, valores[3])
         self.direccion_entry.insert(0, valores[4])
-        self.tipo_entry.insert(0, valores[5])
+        self.tipo_spinbox.insert(0, valores[5])
         self.marca_entry.insert(0, valores[6])
         self.modelo_entry.insert(0, valores[7])
         self.falla_entry.insert(0, valores[8])

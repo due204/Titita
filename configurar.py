@@ -1,5 +1,10 @@
-from tkinter import Label, Entry, Button, Toplevel
-from tkinter import StringVar, Checkbutton, filedialog
+from tkinter import Label
+from tkinter import Entry
+from tkinter import Button
+from tkinter import Toplevel
+from tkinter import StringVar
+from tkinter import Checkbutton
+from tkinter import filedialog
 import os
 import sys
 

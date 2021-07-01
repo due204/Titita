@@ -1,5 +1,8 @@
-from peewee import SqliteDatabase, AutoField, BooleanField
-from peewee import CharField, DateField, IntegerField
+from peewee import SqliteDatabase
+from peewee import AutoField
+from peewee import CharField
+from peewee import DateField
+from peewee import IntegerField
 from peewee import Model
 from datetime import datetime
 import os
@@ -83,28 +86,6 @@ class BaseDatos(Model):
             notificacion=noti,
         )
         datos.save()
-
-
-"""class BaseSecundaria(Model):
-    orden = AutoField()
-    estado = IntegerField()  # IntegerField para numeros
-    costo = IntegerField()
-    total = IntegerField()
-    descripcion = CharField()  # CharField para caracteres
-    notificacion = BooleanField(default=False)
-
-    def guardar2(self, esta, cost, tota, decr, noti):
-        datos2 = BaseSecundaria(
-            estado=esta,
-            costo=cost,
-            total=tota,
-            descripcion=decr,
-            notificacion=noti,
-        )
-        datos2.save()
-
-    class Meta:
-        database = db"""
 
 
 db.connect()
