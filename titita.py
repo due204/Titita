@@ -1,20 +1,21 @@
+from tkinter import Tk
+from tkinter import Frame
+from tkinter import Label
 from tkinter import Entry
 from tkinter import Button
-from tkinter import Tk
+from tkinter import Spinbox
+from tkinter import Scrollbar
 from tkinter import PhotoImage
 from tkinter import LabelFrame
 from tkinter import messagebox
-from tkinter import Frame
-from tkinter import Label
-from tkinter import Scrollbar
-from tkinter import Spinbox
+from tkinter.ttk import Combobox
 from validar_campos import Validacion
 from configurar import configuracion
+from tkinter.ttk import Treeview
 from buscar import busqueda
 from prints import imprimir
 from base import BaseDatos
 from factura import boleta
-import tkinter.ttk as ttk
 import sys
 import os
 
@@ -118,7 +119,7 @@ class MiVistas(Frame):
             text="Tipo:",
             bg="lavender",
         )
-        self.tipo_spinbox = Spinbox(
+        self.tipo_combobox = Combobox(
             entry_frame,
             width=48,
             values=(
@@ -154,7 +155,7 @@ class MiVistas(Frame):
             ),
         )
         self.tipo_label.grid(row=4, column=0)
-        self.tipo_spinbox.grid(row=4, column=1, sticky="w")
+        self.tipo_combobox.grid(row=4, column=1, sticky="w")
 
         self.marca_label = Label(
             entry_frame,
@@ -194,16 +195,17 @@ class MiVistas(Frame):
 
         ##################################################################
 
-        self.estado_spin = Spinbox(
+        self.estado_combobox = Combobox(
             entry2_frame,
-            values=("En reparacion", "Presupuestado", "Entrgado"),
+            width=28,
+            values=("En reparacion", "Presupuestado", "Entrgado", "Rechazado"),
         )
         self.estado_label = Label(
             entry2_frame,
             text="Estado",
             bg="lavender",
         )
-        self.estado_spin.grid(row=0, column=1, sticky="w")
+        self.estado_combobox.grid(row=0, column=1, sticky="w")
         self.estado_label.grid(row=0, column=0, sticky="w")
 
         self.costo_label = Label(
@@ -235,7 +237,7 @@ class MiVistas(Frame):
 
         self.notificacion_spin = Spinbox(
             entry2_frame,
-            width=5,
+            width=28,
             values=("No", "Si"),
         )
         self.notificacion_label = Label(
@@ -289,7 +291,7 @@ class MiVistas(Frame):
         #######################################################################
 
         # Treeview
-        self.tree = ttk.Treeview(
+        self.tree = Treeview(
             tree_frame,
             yscrollcommand=tree_scroll.set,
             columns=(
@@ -341,12 +343,12 @@ class MiVistas(Frame):
         self.apellido_entry.delete(0, "end")
         self.telefono_entry.delete(0, "end")
         self.direccion_entry.delete(0, "end")
-        self.tipo_spinbox.delete(0, "end")
+        self.tipo_combobox.delete(0, "end")
         self.marca_entry.delete(0, "end")
         self.modelo_entry.delete(0, "end")
         self.falla_entry.delete(0, "end")
         self.otros_entry.delete(0, "end")
-        self.estado_spin.delete(0, "end")
+        self.estado_combobox.delete(0, "end")
         self.costo_entry.delete(0, "end")
         self.total_entry.delete(0, "end")
         self.descripcion_entry.delete(0, "end")
@@ -405,12 +407,12 @@ class MiVistas(Frame):
                     apellido=self.apellido_entry.get(),
                     telefono=self.telefono_entry.get(),
                     direccion=self.direccion_entry.get(),
-                    tipo=self.tipo_spinbox.get(),
+                    tipo=self.tipo_combobox.get(),
                     marca=self.marca_entry.get(),
                     modelo=self.modelo_entry.get(),
                     falla=self.falla_entry.get(),
                     otros=self.otros_entry.get(),
-                    estado=self.estado_spin.get(),
+                    estado=self.estado_combobox.get(),
                     costo=self.costo_entry.get(),
                     total=self.total_entry.get(),
                     descripcion=self.descripcion_entry.get(),
@@ -437,12 +439,12 @@ class MiVistas(Frame):
                     self.apellido_entry.get(),
                     self.telefono_entry.get(),
                     self.direccion_entry.get(),
-                    self.tipo_spinbox.get(),
+                    self.tipo_combobox.get(),
                     self.marca_entry.get(),
                     self.modelo_entry.get(),
                     self.falla_entry.get(),
                     self.otros_entry.get(),
-                    self.estado_spin.get(),
+                    self.estado_combobox.get(),
                     self.costo_entry.get(),
                     self.total_entry.get(),
                     self.descripcion_entry.get(),
@@ -475,7 +477,7 @@ class MiVistas(Frame):
         mi_lisu.append(str(self.modelo_entry.get()))
         mi_lisu.append(str(self.falla_entry.get()))
         mi_lisu.append(str(self.otros_entry.get()))
-        mi_lisu.append(str(self.tipo_spinbox.get()))
+        mi_lisu.append(str(self.tipo_combobox.get()))
         boleta(mi_lisu)
         bole = messagebox.askyesno(message="¿Imprimir boleta?", title="Boleta")
         if bole:
@@ -499,12 +501,12 @@ class MiVistas(Frame):
         self.apellido_entry.insert(0, valores[2])
         self.telefono_entry.insert(0, valores[3])
         self.direccion_entry.insert(0, valores[4])
-        self.tipo_spinbox.insert(0, valores[5])
+        self.tipo_combobox.insert(0, valores[5])
         self.marca_entry.insert(0, valores[6])
         self.modelo_entry.insert(0, valores[7])
         self.falla_entry.insert(0, valores[8])
         self.otros_entry.insert(0, valores[9])
-        self.estado_spin.insert(0, valores[10])
+        self.estado_combobox.insert(0, valores[10])
         self.costo_entry.insert(0, valores[11])
         self.total_entry.insert(0, valores[12])
         self.descripcion_entry.insert(0, valores[13])
