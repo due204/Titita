@@ -1,6 +1,7 @@
 import os
 import sys
 import webbrowser
+from tkinter import messagebox
 
 
 sistema = sys.platform
@@ -25,11 +26,15 @@ def imprimir(argu):
             ruta = ruta2[0] + "/Boletas/Orden" + argu + ".pdf"
         else:
             ruta = ruta3 + "/Orden" + argu + ".pdf"
-        # Comando GNU/Linux para la impresion
-        # Necesita tener cups instalado en su sistema
-        # Y configurado su impresora a traves de cups
-        ruta_l = "lp -o media=A4" + " " + ruta
-        os.system(ruta_l)
+        # Preguntamos si queremos imprimir el pdf
+        bole = messagebox.askyesno(message="¿Imprimir boleta?", title="Boleta")
+        if bole:
+            # Comando GNU/Linux para la impresion
+            # Necesita tener cups instalado en su sistema
+            # Y configurado su impresora a traves de cups
+            ruta_l = "lp -o media=A4" + " " + ruta
+            os.system(ruta_l)
+        # Abrimos el pdf en el navegador
         if not naveg:
             webbrowser.open(ruta, new=2, autoraise=True)
 
@@ -38,17 +43,21 @@ def imprimir(argu):
     elif sistema == "win32" or "win64":
         import win32api
 
-        if not naveg:
-            # Si no se a especificado la ruta se utiliza la default
-            if not ruta3:
-                ruta = ruta2[0] + "\Boletas\Orden" + argu + ".pdf"
-            else:
-                ruta = ruta3 + "\Orden" + argu + ".pdf"
-            webbrowser.open(ruta, new=2, autoraise=True)
+        # Si no se a especificado la ruta se utiliza la default
+        if not ruta3:
+            ruta = ruta2[0] + "\\Boletas\\Orden" + argu + ".pdf"
+        else:
+            ruta = ruta3 + "\\Orden" + argu + ".pdf"
+        # Preguntamos si queremos imprimir el pdf
+        bole = messagebox.askyesno(message="¿Imprimir boleta?", title="Boleta")
+        if bole:
             try:
                 win32api.ShellExecute(0, "print", ruta, None, ".", 0)
             except:
                 print("Impresora no encontrada")
+        # Abrimos el pdf en el navegador
+        if not naveg:
+            webbrowser.open(ruta, new=2, autoraise=True)
 
     # Si no reconoce el sistema
     ####################################################################
