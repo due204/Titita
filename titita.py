@@ -198,8 +198,15 @@ class MiVistas(Frame):
         self.estado_combobox = Combobox(
             entry2_frame,
             width=28,
-            values=("En reparacion", "Presupuestado", "Entrgado", "Rechazado"),
+            values=(
+                "Ingresado",
+                "En reparacion",
+                "Presupuestado",
+                "Entrgado",
+                "Rechazado",
+            ),
         )
+        self.estado_combobox.current(0)
         self.estado_label = Label(
             entry2_frame,
             text="Estado",
@@ -478,11 +485,10 @@ class MiVistas(Frame):
         mi_lisu.append(str(self.falla_entry.get()))
         mi_lisu.append(str(self.otros_entry.get()))
         mi_lisu.append(str(self.tipo_combobox.get()))
+        # Mandamos los la lista a factura.boleta para generar el pdf
         boleta(mi_lisu)
-        bole = messagebox.askyesno(message="¿Imprimir boleta?", title="Boleta")
-        if bole:
-            # Mandamos el numero de orden a imprimir
-            imprimir(str(orde).zfill(5))
+        # Mandamos el numero de orden para imprimir el pdf
+        imprimir(str(orde).zfill(5))
 
     #  Esta funcion se encarga de la configuracion
     def config_data(self, *argus):
