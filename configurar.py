@@ -19,14 +19,14 @@ contactarme al mail: due204@gmail.com"""
 
 def configuracion():
     def lectura():
-        #  Lectura del archivo de configuracion
+        #  Lectura del archivo de configuracion.
         a = open(archivo, "r")
         dato = a.readlines()
         return dato
         a.close()
 
     def guardar_datos():
-        #  Guardamos los datos en el archico de configuracion
+        #  Guardamos los datos en el archico de configuracion.
         a = open(archivo, "w")
         a.write("ruta_boleta:" + ruta.get() + "\n")
         a.write("nombre_1:" + nombre1.get() + "\n")
@@ -40,19 +40,19 @@ def configuracion():
         toor.destroy()
 
     def guradar_ruta():
-        # Seleccionamos el directorio
+        # Seleccionamos el directorio.
         directorio = filedialog.askdirectory()
         if directorio:
             print(directorio)
             # Seteamos el directiorio
             ruta.set(directorio)
 
-    toor = Toplevel()  # Creamos una ventana
-    toor.title("Configurar Titita")  # Titulo de la ventana
-    toor.geometry("425x500")  # Tamaño de la ventana
-    toor.resizable(False, False)  # Evitamos modificar la ventana
+    toor = Toplevel()  # Creamos una ventana.
+    toor.title("Configurar Titita")  # Titulo de la ventana.
+    toor.geometry("425x500")  # Tamaño de la ventana.
+    toor.resizable(False, False)  # Evitamos modificar la ventana.
 
-    # Variables
+    # Variables.
     ruta = StringVar()
     nombre1 = StringVar()
     nombre2 = StringVar()
@@ -61,7 +61,7 @@ def configuracion():
     telefono = StringVar()
     navegador = StringVar()
 
-    # Seateamos las variables
+    # Seateamos las variables.
     atur = lectura()
 
     atur0 = atur[0].lstrip("ruta_boleta:").rstrip("\n")
