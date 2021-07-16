@@ -14,7 +14,7 @@ ruta2 = os.path.split(ruta1)
 archivo = ruta2[0] + "/config"
 
 textedu = """Por correccion de errores, dudas o sugerencias no duden en
-contactarme al mail: due204@gmail.com  PD: Maxi gay"""
+contactarme al mail: due204@gmail.com"""
 
 
 def configuracion():
