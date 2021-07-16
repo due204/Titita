@@ -14,5 +14,3 @@ Con el botón "Borrar" borramos todos los campos del programa.
 
 Con el botón "Configurar" podemos configurar la ruta a donde guardaremos las ordenes de reparaciones en pdf, los datos de las boletas generadas en pdf 
 como el nombre de nuestro taller, dirección, teléfonos, celular y por ultimo la visualización de la orden de reparación en el navegador.
-
-Version para windows: https://mega.nz/file/OgERmQZT#HnmojhKexUjmNtTUQcliM-MM8nHZFcEHswpOH-4vml0
