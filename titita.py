@@ -430,7 +430,7 @@ class MiVistas(Frame):
                 self.rm_data()
                 # Imprimo por pantalla los datos
                 self.ver_data()
-        except:
+        except IndexError:
             # Controlo que el campo del nombre este completo antes de continuar
             namae = self.valid.vali(self.nombre_entry.get())
             if not namae:
