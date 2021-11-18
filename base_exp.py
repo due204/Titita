@@ -111,7 +111,8 @@ Cierre el programa para cargar la base de datos
 
 
 def exportacion(bango=True):
-    nombre_final = "Base_datos_" + str(datetime.now()) + ".xlsx"
+    fecha = datetime.now()
+    nombre_final = "Base_datos-" + str(fecha.date()) + ".xlsx"
     archivo = Workbook()
     hoja = archivo.active
     resultado = BaseDatos.select()
